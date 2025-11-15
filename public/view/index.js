@@ -1,8 +1,20 @@
 import { decodeHTMLFromURL } from '../utils/html.js'
-const params = new URLSearchParams(window.location.search)
-const encoded = params.get('html')
+
+function getEncoded() {
+  const qs = new URLSearchParams(window.location.search).get('html')
+  if (qs) return qs
+  const hash = window.location.hash ? window.location.hash.replace(/^#/, '') : ''
+  if (hash) {
+    const hp = new URLSearchParams(hash).get('html')
+    if (hp) return hp
+  }
+  return null
+}
+
+const encoded = getEncoded()
 const iframe = document.getElementById('frame')
 const error = document.getElementById('error')
+
 if (!encoded) {
   error.style.display = 'block'
 } else {
@@ -15,9 +27,14 @@ if (!encoded) {
   if (!html) {
     error.style.display = 'block'
   } else {
-    const blob = new Blob([html], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    iframe.src = url
-    iframe.style.display = 'block'
+    const mode = new URLSearchParams(window.location.search).get('mode')
+    if (mode === 'write') {
+      document.open()
+      document.write(html)
+      document.close()
+    } else {
+      iframe.srcdoc = html
+      iframe.style.display = 'block'
+    }
   }
 }
