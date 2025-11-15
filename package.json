@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vercel dev",
-    "build": "vercel build",
+    "build": "echo No build step required for static files",
     "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
   }
 }
