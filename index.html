@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TViewer – Transcript Viewer</title>
+</head>
+<body>
+  <main style="max-width:800px;margin:0 auto;padding:24px;font-family:system-ui,sans-serif;">
+    <h1>TViewer – Transcript Viewer</h1>
+    <p>Render raw HTML passed via the <code>html</code> query parameter.</p>
+
+    <h2>How to encode HTML</h2>
+    <p>Use <code>encodeURIComponent</code> and pass it to <code>/view?html=...</code>.</p>
+    <pre><code>const encoded = encodeURIComponent(html)
+const link = `https://tviewer.vercel.app/view?html=${encoded}`</code></pre>
+
+    <h2>Example link</h2>
+    <p><a id="example" href="/view?html=%3Ch1%3ETest%3C%2Fh1%3E">View example</a></p>
+
+    <h2>Try it</h2>
+    <textarea id="input" placeholder="Paste HTML here" style="width:100%;height:200px;"></textarea>
+    <div style="margin-top:12px;">
+      <button id="generate">Generate link</button>
+      <input id="output" readonly style="width:100%;margin-top:8px;" />
+    </div>
+
+    <script type="module">
+      import { encodeHTMLForURL } from './utils/html.js'
+      const input = document.getElementById('input')
+      const output = document.getElementById('output')
+      const btn = document.getElementById('generate')
+      const example = document.getElementById('example')
+      btn.addEventListener('click', () => {
+        const encoded = encodeHTMLForURL(input.value || '')
+        const link = `/view?html=${encoded}`
+        output.value = `${location.origin}${link}`
+      })
+      example.href = '/view?html=' + encodeHTMLForURL('<h1>Test</h1>')
+    </script>
+  </main>
+  </body>
+</html>

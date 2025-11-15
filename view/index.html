@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TViewer – View</title>
+</head>
+<body style="margin:0;">
+  <div id="error" style="font-family:system-ui,sans-serif;max-width:800px;margin:24px auto;display:none;">
+    <h1>No transcript provided.</h1>
+    <p>Pass encoded HTML in the <code>html</code> query parameter.</p>
+  </div>
+  <iframe id="frame" sandbox="allow-scripts allow-same-origin" style="width:100%;height:100vh;border:0;display:none;"></iframe>
+  <script type="module" src="./index.js"></script>
+</body>
+</html>
